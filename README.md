@@ -1,6 +1,14 @@
 # min-cost-arborescence
 C++ code for computing minimum cost spanning tree in a directed graph by implementing edmond's Algorithm. 
 
+we use the property of directed spanning trees that each node has except source has 1 indegree thus we use a global array parent[n] to 
+represent the arborescence at each point
+
+
+
+
+
+
 
 ------ Input Format -----------------------------------------------------------------
 
