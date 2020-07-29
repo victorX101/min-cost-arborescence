@@ -3,13 +3,13 @@
 
 we use the property of directed spanning trees that each node has except source has 1 indegree thus we use a global array parent[n] to 
 represent the arborescence at each point
-## INPUT FORMAT
+### INPUT FORMAT
 ----------------------------------------------------------------
-First line: Number of Test Cases T and then follows their description
-For each test case, first row indicate N s (single space separated) where N is number of vertices in directed graph where vertices are labelled 1 to N and s is the index of source vertex
-Second row mentions the number of edges M
-And then M rows mentioning  u v w(u,v)
-## OUTPUT FORMAT
+First line: Number of Test Cases **T** and then follows their description
+For each test case, first row indicate **N s** (single space separated) where N is number of vertices in directed graph where vertices are labelled 1 to N and s is the index of source vertex
+Second row mentions the number of edges **M**
+And then M rows mentioning the edges from u to v vertex and their weight w  **u v w**
+### OUTPUT FORMAT
 ----------------------------------------------------------------
 T rows corresponding to T test cases 
 Output row for each test case has 2N+1+1 entries (all single space separated)
@@ -19,4 +19,4 @@ and then Symbol "#"
 and then N entries (corresponding to vertices V1, V2, V3..., VN) providing the label of the parent node through which one reaches i-th vertex (basically second last node in path from source vertex to that i-th vertex.
 
 ----------------
-It shows a message when all the vertices are not reachable from source as arborescence is defined only when all nodes are reachable 
+**It shows a message when all the vertices are not reachable from source as spanning tree is defined only when all nodes are reachable.** 
