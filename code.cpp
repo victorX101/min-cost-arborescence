@@ -1,4 +1,23 @@
 /*
+------ Input Format -----------------------------------------------------------------
+
+First line: Number of Test Cases T and then follows their description
+For each test case, first row indicate N s (single space separated) where N is number of vertices in directed graph where vertices are labelled 1 to N and s is the index of source vertex
+Second row mentions the number of edges M
+And then M rows mentioning  u v w(u,v)
+
+
+------ Output Format ----------------------------------------------------------------
+
+
+T rows corresponding to T test cases 
+Output row for each test case has 2N+1+1 entries (all single space separated)
+where first entry is the  total sum of min cost arborescence 
+and then N entries corresponding to vertices V1, V2, V3..., VN providing the distance of i-th vertex from the source vertex s. (Indicate -1 if unreachable)
+and then Symbol #
+and then N entries (corresponding to vertices V1, V2, V3..., VN) providing the label of the parent node through which one reaches i-th vertex (basically second last node in path from source vertex to that i-th vertex.
+
+--------------------------------------------------------------------------------------
 
 sample input output cases
 
@@ -46,26 +65,6 @@ sample input output cases
 Time taken by program is : 0.000529 sec
 
 
------- Input Format -----------------------------------------------------------------
-
-First line: Number of Test Cases T and then follows their description
-For each test case, first row indicate N s (single space separated) where N is number of vertices in directed graph where vertices are labelled 1 to N and s is the index of source vertex
-Second row mentions the number of edges M
-And then M rows mentioning  u v w(u,v)
-
-
------- Output Format ----------------------------------------------------------------
-
-
-T rows corresponding to T test cases 
-Output row for each test case has 2N+1+1 entries (all single space separated)
-where first entry is the  total sum of min cost arborescence 
-and then N entries corresponding to vertices V1, V2, V3..., VN providing the distance of i-th vertex from the source vertex s. (Indicate -1 if unreachable)
-and then Symbol #
-and then N entries (corresponding to vertices V1, V2, V3..., VN) providing the label of the parent node through which one reaches i-th vertex (basically second last node in path from source vertex to that i-th vertex.
-
-
-
 ----------------NOTE that it shows a message when all the vertices are not reachable from source as arborescence is defined only when all nodes are reachable ---------------------------------------
 
 
@@ -85,7 +84,64 @@ int reachable[N]={0};
 int cnum = -1;
 int s,n;
 
+// ---------------------------------------- 
 
+void givefinal(int arr[][N]);
+void dfs(int arr[][N],int t);
+void finalans(int arr[][N]);
+void mincostarbor(int arr[][N],int vert[],int en);
+
+// ---------------------------------------- MAIN ---------------------------------
+
+int main()
+{
+	struct timeval start, end; 
+	int t;
+	cin>>t;
+	gettimeofday(&start, NULL);
+	while(t>0)
+	{
+		cnum = -1;
+		cin>>n>>s;
+		int arr[N][N];
+		int m,i,j,flag;
+		cin>>m;
+		vector<int> vec[n];
+		for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+		arr[i][j]=MAX;
+		for(i=0;i<N;i++)
+		reachable[i]=0;
+		int u,v,w; 
+		for(i=0;i<m;i++)
+		{
+			cin>>u>>v>>w;
+			arr[u-1][v-1]=w;
+			vec[u-1].push_back(w-1);
+		}
+		int vert[N];
+		j=0;
+		dfs(arr,s-1);
+		for(i=0;i<n;i++)
+		if(reachable[i]==1)
+		vert[j++]=i;
+		if(j!=n)
+		{cout<<"some of the vertices are unreachable"<<endl;
+		t=t-1;
+		continue;}
+		mincostarbor(arr,vert,j);
+		t=t-1;
+	}
+	gettimeofday(&end, NULL);
+	double time_taken; 
+          time_taken = (end.tv_sec - start.tv_sec) * 1e6; 
+    	  time_taken = (time_taken + (end.tv_usec -  start.tv_usec)) * 1e-6; 
+  
+         cout << "Time taken by program is : " << fixed << time_taken << setprecision(6); 
+         cout << " sec" << endl;
+	return 0;
+}
+	
 
 
 void givefinal(int arr[][N])
@@ -280,52 +336,4 @@ void mincostarbor(int arr[][N],int vert[],int en)
 
 
 
-int main()
-{
-	struct timeval start, end; 
-	gettimeofday(&start, NULL);
-	int t;
-	cin>>t;
-	while(t>0)
-	{
-		cnum = -1;
-		cin>>n>>s;
-		int arr[N][N];
-		int m,i,j,flag;
-		cin>>m;
-		vector<int> vec[n];
-		for(i=0;i<n;i++)
-		for(j=0;j<n;j++)
-		arr[i][j]=MAX;
-		for(i=0;i<N;i++)
-		reachable[i]=0;
-		int u,v,w; 
-		for(i=0;i<m;i++)
-		{
-			cin>>u>>v>>w;
-			arr[u-1][v-1]=w;
-			vec[u-1].push_back(w-1);
-		}
-		int vert[N];
-		j=0;
-		dfs(arr,s-1);
-		for(i=0;i<n;i++)
-		if(reachable[i]==1)
-		vert[j++]=i;
-		if(j!=n)
-		{cout<<"some of the vertices are unreachable"<<endl;
-		t=t-1;
-		continue;}
-		mincostarbor(arr,vert,j);
-		t=t-1;
-	}
-	gettimeofday(&end, NULL);
-	double time_taken; 
-          time_taken = (end.tv_sec - start.tv_sec) * 1e6; 
-    	  time_taken = (time_taken + (end.tv_usec -  start.tv_usec)) * 1e-6; 
-  
-         cout << "Time taken by program is : " << fixed << time_taken << setprecision(6); 
-         cout << " sec" << endl;
-	return 0;
-}
-		
+	
